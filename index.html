@@ -363,14 +363,15 @@
   </div>
 
   <script>
-    // Firebase 配置 - 請替換為你的配置
+    // Firebase 配置
     const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "your-project.firebaseapp.com",
-      projectId: "your-project-id",
-      storageBucket: "your-project.firebasestorage.app",
-      messagingSenderId: "your-sender-id",
-      appId: "your-app-id"
+      apiKey: "AIzaSybaq40m3bykuGn90AfDt-59i0e-1_n2Ws",
+      authDomain: "gray-calendar-f7888.firebaseapp.com",
+      projectId: "gray-calendar-f7888",
+      storageBucket: "gray-calendar-f7888.firebasestorage.app",
+      messagingSenderId: "632664584289",
+      appId: "1:632664584289:web:82b074c5fa29b6987f7a20",
+      measurementId: "G-TFNPVP3GT5"
     };
     
     // 全域變數
@@ -845,29 +846,31 @@
       const eventTitle = editingEvent.title || '未命名事件';
       console.log('準備刪除事件:', eventTitle);
       
-      // 直接刪除，不使用有問題的 confirm()
-      console.log('開始刪除程序');
-      console.log('刪除前事件數量:', events.length);
-      console.log('要刪除的事件ID:', editingEvent.id);
-      
-      // 從本地陣列中刪除
-      const originalLength = events.length;
-      events = events.filter(e => e.id !== editingEvent.id);
-      
-      console.log('刪除後事件數量:', events.length);
-      console.log('刪除成功:', events.length < originalLength);
-      
-      // 從 Firebase 刪除
-      deleteEventFromFirebase(editingEvent.id);
-      
-      // 先關閉模態框，清空 editingEvent
-      hideModal();
-      
-      // 重新渲染
-      renderCalendar();
-      
-      // 顯示成功訊息
-      alert(`事件「${eventTitle}」已刪除！`);
+      // 確認刪除
+      if (confirm(`確定要刪除事件「${eventTitle}」嗎？`)) {
+        console.log('開始刪除程序');
+        console.log('刪除前事件數量:', events.length);
+        console.log('要刪除的事件ID:', editingEvent.id);
+        
+        // 從本地陣列中刪除
+        const originalLength = events.length;
+        events = events.filter(e => e.id !== editingEvent.id);
+        
+        console.log('刪除後事件數量:', events.length);
+        console.log('刪除成功:', events.length < originalLength);
+        
+        // 從 Firebase 刪除
+        deleteEventFromFirebase(editingEvent.id);
+        
+        // 先關閉模態框，清空 editingEvent
+        hideModal();
+        
+        // 重新渲染
+        renderCalendar();
+        
+        // 顯示成功訊息
+        alert(`事件「${eventTitle}」已刪除！`);
+      }
     }
     
     // 切換月份
